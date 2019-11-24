@@ -16,6 +16,29 @@ let food = {
 
 let score = 0;
 
+document.addEventListener("keydown", direction);
+
+let d;
+
+function direction(event){
+    switch(event.keyCode){
+        case 37:
+            d="LEFT"
+            break;
+        case 38:
+            d="UP"
+            break;
+        case 39:
+            d="DOWN"
+            break;
+        case 38:
+            d="UP"
+            break;
+        default:
+    }
+
+}
+
 function draw(){
     //draw play area
     context.fillStyle = "gray";
@@ -25,13 +48,16 @@ function draw(){
 
     //draw snake
     for (let i = 0; i < snake.length; i++){
-        context.fillStyle = "green";
+        context.fillStyle = ( i==0 )? "darkgreen" : "green";
         context.fillRect(snake[i].x, snake[i].x, box, box);
     }
 
     //draw apple
     context.fillStyle = "red";
     context.fillRect(food.x, food.y, box, box);
+
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
     
     //draw score
     context.fillStyle = "red";
