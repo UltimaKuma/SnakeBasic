@@ -43,7 +43,7 @@ function direction(event){
 function draw(){
     //draw play area
     context.fillStyle = "gray";
-    context.fillRect(0, 0, 608, 608);
+    context.fillRect(0, 0, 608, 672);
     context.fillStyle = "darkgray";
     context.fillRect(box, 3*box, 17*box, 17*box);
 
@@ -60,10 +60,16 @@ function draw(){
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
-    
-    
-    snake.pop();
-
+    if(snakeX == food.x && snakeY == food.y){
+        score++;
+        food = {
+            x : Math.floor(Math.random()*17+1) * box,
+            y : Math.floor(Math.random()*17+3) * box,
+        }
+    }else{
+        snake.pop();
+    }
+        
     if( d == "LEFT" ) snakeX -= box;
     if( d == "UP" ) snakeY -= box;
     if( d == "RIGHT" ) snakeX += box;
