@@ -37,7 +37,15 @@ function direction(event){
             break;
         default:
     }
+}
 
+function collision(head, array){
+    for(let i = 0; i<array.length; i++){
+        if(head.x == array[i].x && head.y == array[i].y){
+            return true;
+        }
+    }
+    return false;
 }
 
 function draw(){
@@ -69,7 +77,9 @@ function draw(){
     }else{
         snake.pop();
     }
-        
+
+    
+
     if( d == "LEFT" ) snakeX -= box;
     if( d == "UP" ) snakeY -= box;
     if( d == "RIGHT" ) snakeX += box;
@@ -78,6 +88,11 @@ function draw(){
     let newHead = {
         x : snakeX,
         y : snakeY
+    }
+
+    //game over
+    if(snakeX<box || snakeX>17*box || snakeY < 3*box || snakeY>19*box || collision(newHead, snake)){
+        clearInterval(game);
     }
     
     snake.unshift(newHead);
