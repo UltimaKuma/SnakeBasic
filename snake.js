@@ -22,20 +22,14 @@ let d;
 
 function direction(event){
     //dont allow movement in the opposite direction
-    switch(event.keyCode){
-        case 37:
-            d = (d=="RIGHT")? d : "LEFT";
-            break;
-        case 38:
-            d = (d=="DOWN")? d : "UP";
-            break;
-        case 39:
-            d = (d=="LEFT")? d : "RIGHT";
-            break;
-        case 40:
-            d = (d=="UP")? d : "DOWN";
-            break;
-        default:
+    if(event.keyCode==37 && d != "RIGHT"){
+        d = "LEFT";
+    }else if (event.keyCode==38 && d!= "DOWN"){
+        d = "UP";
+    }else if (event.keyCode==39 && d!= "LEFT"){
+        d = "RIGHT";
+    }else if (event.keyCode==40 && d!= "UP"){
+        d = "DOWN";
     }
 }
 
