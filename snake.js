@@ -21,18 +21,19 @@ document.addEventListener("keydown", direction);
 let d;
 
 function direction(event){
+    //dont allow movement in the opposite direction
     switch(event.keyCode){
         case 37:
-            d="LEFT"
+            d = (d=="RIGHT")? d : "LEFT";
             break;
         case 38:
-            d="UP"
+            d = (d=="DOWN")? d : "UP";
             break;
         case 39:
-            d="RIGHT"
+            d = (d=="LEFT")? d : "RIGHT";
             break;
         case 40:
-            d="DOWN"
+            d = (d=="UP")? d : "DOWN";
             break;
         default:
     }
@@ -58,6 +59,8 @@ function draw(){
 
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
+
+    
     
     snake.pop();
 
