@@ -29,10 +29,10 @@ function direction(event){
             d="UP"
             break;
         case 39:
-            d="DOWN"
+            d="RIGHT"
             break;
-        case 38:
-            d="UP"
+        case 40:
+            d="DOWN"
             break;
         default:
     }
@@ -49,7 +49,7 @@ function draw(){
     //draw snake
     for (let i = 0; i < snake.length; i++){
         context.fillStyle = ( i==0 )? "darkgreen" : "green";
-        context.fillRect(snake[i].x, snake[i].x, box, box);
+        context.fillRect(snake[i].x, snake[i].y, box, box);
     }
 
     //draw apple
@@ -59,6 +59,20 @@ function draw(){
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
     
+    snake.pop();
+
+    if( d == "LEFT" ) snakeX -= box;
+    if( d == "UP" ) snakeY -= box;
+    if( d == "RIGHT" ) snakeX += box;
+    if( d == "DOWN" ) snakeY += box;
+
+    let newHead = {
+        x : snakeX,
+        y : snakeY
+    }
+    
+    snake.unshift(newHead);
+
     //draw score
     context.fillStyle = "red";
     context.fillRect(1*box, 0.75*box, box, box);
