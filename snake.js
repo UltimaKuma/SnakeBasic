@@ -50,7 +50,7 @@ function collision(head, array){
 
 function draw(){
     //draw play area
-    context.fillStyle = "gray";
+    context.fillStyle = "#24252A";
     context.fillRect(0, 0, 608, 672);
     context.fillStyle = "darkgray";
     context.fillRect(box, 3*box, 17*box, 17*box);
