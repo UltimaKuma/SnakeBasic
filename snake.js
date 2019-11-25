@@ -20,22 +20,29 @@ document.addEventListener("keydown", direction);
 
 let d;
 
+let inputLock = false;
+
 function direction(event) {
-    //dont allow movement in the opposite direction
-    switch (event.keyCode) {
-        case 37:
-            d = (d == "RIGHT") ? d : "LEFT";
-            break;
-        case 38:
-            d = (d == "DOWN") ? d : "UP";
-            break;
-        case 39:
-            d = (d == "LEFT") ? d : "RIGHT";
-            break;
-        case 40:
-            d = (d == "UP") ? d : "DOWN";
-            break;
-        default:
+    //only allow one input per frane
+    if (!inputLock) {
+        //dont allow movement in the opposite direction
+        switch (event.keyCode) {
+            case 37:
+                d = (d == "RIGHT") ? "RIGHT" : "LEFT";
+                break;
+            case 38:
+                d = (d == "DOWN") ? "DOWN" : "UP";
+                break;
+            case 39:
+                d = (d == "LEFT") ? "LEFT" : "RIGHT";
+                break;
+            case 40:
+                d = (d == "UP") ? "UP" : "DOWN";
+                break;
+            default:
+        }
+        inputLock=true;
+        console.log(d);
     }
 }
 
@@ -84,6 +91,8 @@ function draw() {
     else if (d == "UP") {snakeY -= box;}
     else if (d == "RIGHT") {snakeX += box;}
     else if (d == "DOWN") {snakeY += box;}
+
+    inputLock=false;
 
     let newHead = {
         x: snakeX,
