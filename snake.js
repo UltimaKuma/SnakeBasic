@@ -39,6 +39,7 @@ function direction(event) {
     }
 }
 
+//returns true if head is same as any part of the snake
 function collision(head, array) {
     for (let i = 0; i < array.length; i++) {
         if (head.x == array[i].x && head.y == array[i].y) {
