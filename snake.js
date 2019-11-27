@@ -99,22 +99,26 @@ function draw() {
         y: snakeY
     }
 
-    //game over
-    if (snakeX < box || snakeX > 17 * box || snakeY < 3 * box || snakeY > 19 * box || collision(newHead, snake)) {
-        clearInterval(game);
-        context.fillStyle = "white";
-        context.font = "45px Calibri";
-        context.fillText("GAME OVER", 6 * box, 10 * box);
-    }
-
-    snake.unshift(newHead);
-
     //draw score
     context.fillStyle = "red";
     context.fillRect(1 * box, 0.75 * box, box, box);
     context.fillStyle = "white";
     context.font = "45px Calibri";
     context.fillText(score, 2.5 * box, 1.7 * box);
+
+    //game over
+    if (snakeX < box || snakeX > 17 * box || snakeY < 3 * box || snakeY > 19 * box || collision(newHead, snake)) {
+        context.fillStyle = "white";
+        context.font = "45px Calibri";
+        context.fillText("GAME OVER", 6 * box, 10 * box);
+        return;
+    }
+
+    snake.unshift(newHead);
+
+    
+
+    game = setTimeout(draw, 100);
 }
 
-let game = setInterval(draw, 100);
+let game = setTimeout(draw, 100);
