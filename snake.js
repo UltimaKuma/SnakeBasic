@@ -16,34 +16,48 @@ let food = {
 
 let score = 0;
 
-document.addEventListener("keydown", direction);
+document.addEventListener("keydown", keyDowns);
+document.addEventListener("keyup", keyUps);
 
 let d;
 
-let inputLock = false;
+let meter = 0;
 
-function direction(event) {
+let timeSpace = 100;
+
+let dirLock = false;
+
+let shiftDown = false;
+
+function keyDowns(event) {
     //only allow one input per frane
-    if (!inputLock) {
+    if (!dirLock) {
         //dont allow movement in the opposite direction
         switch (event.keyCode) {
             case 37:
                 d = (d == "RIGHT") ? "RIGHT" : "LEFT";
+                dirLock=true;
                 break;
             case 38:
                 d = (d == "DOWN") ? "DOWN" : "UP";
+                dirLock=true;
                 break;
             case 39:
                 d = (d == "LEFT") ? "LEFT" : "RIGHT";
+                dirLock=true;
                 break;
             case 40:
                 d = (d == "UP") ? "UP" : "DOWN";
+                dirLock=true;
                 break;
             default:
         }
-        inputLock=true;
-        console.log(d);
     }
+    shiftDown = event.shiftKey;
+}
+
+function keyUps(event){
+    shiftDown = event.shiftKey;
 }
 
 //returns true if head is same as any part of the snake
@@ -75,6 +89,11 @@ function draw() {
     // if apple is collected, do not pop the snake
     if (snakeX == food.x && snakeY == food.y) {
         score++;
+        //add meter if apple collected
+        meter++;
+        if(meter>4){
+            meter=4;
+        }
         food = {
             x: Math.floor(Math.random() * 17 + 1) * box,
             y: Math.floor(Math.random() * 17 + 3) * box,
@@ -92,8 +111,10 @@ function draw() {
     else if (d == "RIGHT") {snakeX += box;}
     else if (d == "DOWN") {snakeY += box;}
 
-    inputLock=false;
+    //allow next input
+    dirLock=false;
 
+    //get value of the newest head
     let newHead = {
         x: snakeX,
         y: snakeY
@@ -106,6 +127,12 @@ function draw() {
     context.font = "45px Calibri";
     context.fillText(score, 2.5 * box, 1.7 * box);
 
+    //draw meter
+    context.strokeStyle = "white";
+    context.lineWidth = 2;
+    context.strokeRect(14 * box - 3, box - 3, 4 * box + 6, 0.5 * box + 6);
+    context.fillRect(14*box, box, meter * box, 0.5 * box);
+
     //game over
     if (snakeX < box || snakeX > 17 * box || snakeY < 3 * box || snakeY > 19 * box || collision(newHead, snake)) {
         context.fillStyle = "white";
@@ -116,9 +143,13 @@ function draw() {
 
     snake.unshift(newHead);
 
-    
 
-    game = setTimeout(draw, 100);
+    if (shiftDown && meter>0) {
+        meter -= 0.25;
+        game = setTimeout(draw, timeSpace*1.5);
+    } else{
+        game = setTimeout(draw, timeSpace);
+    }
 }
 
-let game = setTimeout(draw, 100);
+let game = setTimeout(draw, timeSpace);
